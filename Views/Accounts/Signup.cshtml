@@ -1,0 +1,70 @@
+﻿@model xuonggame.Models.UserModel
+@{
+    ViewBag.Title = "Signup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="vh-100 bg-image"
+         style="background-image: url('/Assets/Img/test4.jpg'); margin-bottom:160px">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5" style="background-color: rgba(2, 128, 128, 0.1); ">
+                            <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+
+                            @using (Html.BeginForm("Signup", "Accounts", FormMethod.Post))
+                            {
+
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-outline mb-4">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-lg", id = "form3Example1cg" })
+                            @Html.LabelFor(m => m.UserName, new { @class = "form-label" })
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+
+                        </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
+                                    <label class="form-label" for="form3Example3cg">Your Email</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    @Html.PasswordFor(m => m.UserPassword, new { @class = "form-control form-control-lg", id = "form3Example4cg" })
+                                    @Html.LabelFor(m => m.UserPassword, new { @class = "form-label" })
+                                    @Html.ValidationMessageFor(m => m.UserPassword, "", new { @class = "text-danger" })
+
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
+                                    <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                                </div>
+
+                                <div class="form-check d-flex justify-content-center mb-5">
+                                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
+                                    <label class="form-check-label" for="form2Example3g">
+                                        I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                                    </label>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                                        Register
+                                    </button>
+                                </div>
+
+                                <p class="text-center text-muted mt-5 mb-0">
+                                    Have already an account? @Html.ActionLink("Login here", "Login", "Accounts", null, new { @class = "fw-bold text-body" })
+                                </p>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

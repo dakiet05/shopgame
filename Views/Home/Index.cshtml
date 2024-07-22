@@ -1,0 +1,331 @@
+﻿@model IEnumerable<xuonggame.Models.Product_Category>
+@using xuonggame.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+@{ 
+    var list1 = General.getBlog();
+    var list2 = General.getProductByCategory(1);
+}
+
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Genre</span>
+                    </div>
+                    @*<ul>
+                        @foreach(var item in Model)
+            {
+
+                        <li><a href="@Url.Action("")">@item.CatName </a></li>
+            }
+                        <li><a href="#">Adventure game</a></li>
+                        <li><a href="#">Role-playing game</a></li>
+                        <li><a href="#">Simulation game</a></li>
+                        <li><a href="#">Strategy game </a></li>
+                        <li><a href="#">Sports game</a></li>
+                        <li><a href="#">Puzzle game</a></li>
+                        <li><a href="#">Massively multiplayer online role-playing game</a></li>
+                        <li><a href="#">Casual game </a></li>
+                        <li><a href="#">Shooter</a></li>
+                        <li><a href="#">Horror</a></li>
+                    </ul>*@
+                    <div class="featured__controls">
+                        <ul style="padding-left:0">
+                            @{
+                                foreach (var i in Model)
+                                {
+                                    <li style="border-bottom: dashed; border-color: #00ff90; width: 100%; padding-left: 12px" ><a data-filter=".@i.CatName">@i.CatName</a></li> <br />
+                                    @*<li data-filter=".@i.CatName">@i.CatName</li>
+                                    <br />*@
+
+                                }
+                            }
+                        </ul>
+                </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            <div class="hero__search__categories">
+                                All Categories
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <form action="@Url.Action("Search","Search")" class="header_search_form clearfix" method="get">
+                                <input type="search" required="required" class="header_search_input" name="Search" placeholder="What kind of game do you want to play ?">
+
+
+
+                                <button type="submit" class="site-btn header_search_button trans_300" value="Submit" name="Search"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918770/search.png" alt=""></button>
+
+                            </form>
+                            @*<input type="text" placeholder="What kind of game do you want to play ?">
+                                <button type="submit" class="site-btn">SEARCH</button>*@
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>+84 275.998.999</h5>
+                            <span>support 24/7 time</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__item set-bg bg-banner" data-setbg="/Assets/Img/banner.jpg">
+                    <div class="hero__text">
+                        <span>BEST GAME EVER</span>
+                        <h2>Game play <br />100% Auth</h2>
+                        <p>Discount 10% for the first time buy at us</p>
+                        <a href="@Url.Action("Index","Product")" class="primary-btn">SHOP NOW</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section Begin -->
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories__slider owl-carousel">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="@item.ProImage">
+                            <h5><a href="@Url.Action("Index","Product",new { id = item.CatId })">@item.CatName</a></h5>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Featured Product</h2>
+                </div>
+                <div class="featured__controls">
+                    <ul>
+                        <li class="active" data-filter="*">All</li>
+                        <li data-filter=".Action">Action</li>
+                        <li data-filter=".Adventure">Adventure</li>
+                        <li data-filter=".Role-playing">Role-playing</li>
+                        <li data-filter=".Simulation">Simulation</li>
+                        <li data-filter=".Strategy">Strategy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges @item.CatName">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="@item.ProImage">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="@Url.Action("Index", "GameDetail", new { id = item.CatId })"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6>
+                                @*@Html.ActionLink(item.ProName, "Index", "GameDetail", new { id = item.CatId }, null)*@
+                                <a href="@Url.Action("Index", "GameDetail", new { id = item.CatId })">@item.ProName</a>
+                            </h6>
+                            <h5>$@item.ProPrice</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+<section class="latest-product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Hot Games</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var item in Model.Take(3))
+                            {
+                                <a href="@Url.Action("Index","GameDetail",new { id = item.CatId })" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="@item.ProImage" alt="" style="min-width:200px">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@item.ProName</h6>
+                                        <span>@item.ProPrice</span>
+                                    </div>
+                                </a>
+                            }
+
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var item in Model.Take(3))
+                            {
+                                <a href="@Url.Action("Index","GameDetail",new { id = item.CatId })" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="@item.ProImage" alt="" style="min-width:200px">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@item.ProName</h6>
+                                        <span>@item.ProPrice</span>
+                                    </div>
+                                </a>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Hot Games</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var item in Model.Take(3))
+                            {
+                                <a href="@Url.Action("Index","GameDetail",new { id = item.CatId })" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="@item.ProImage" alt="" style="min-width:200px">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@item.ProName</h6>
+                                        <span>@item.ProPrice</span>
+                                    </div>
+                                </a>
+                            }
+
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var item in Model.Take(3))
+                            {
+                                <a href="@Url.Action("Index","GameDetail",new { id = item.CatId })" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="@item.ProImage" alt="" style="min-width:200px">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@item.ProName</h6>
+                                        <span>@item.ProPrice</span>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Hot Games</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var item in Model.Take(3))
+                            {
+                                <a href="@Url.Action("Index","GameDetail",new { id = item.CatId })" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="@item.ProImage" alt="" style="min-width:200px">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@item.ProName</h6>
+                                        <span>@item.ProPrice</span>
+                                    </div>
+                                </a>
+                            }>
+                            </a>
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var item in Model.Take(3))
+                            {
+                                <a href="@Url.Action("Index","GameDetail",new { id = item.CatId })" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="@item.ProImage" alt="" style="min-width:200px">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@item.ProName</h6>
+                                        <span>@item.ProPrice</span>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest Product Section End -->
+<!-- Blog Section Begin -->
+<section class="from-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title from-blog__title">
+                    <h2>From The Blog</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            @foreach (var item in list1.Take(3))
+            {
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="img/blog/blog-1.jpg" alt="">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> @item.publish_date</li>
+                                <li><i class="fa fa-comment-o"></i> 5</li>
+                            </ul>
+                            <h5><a href="#">@item.title</a></h5>
+                            <p>@item.ShortContent</p>
+                        </div>
+                    </div>
+                </div>
+         }
+            </div>
+
+               
+            </div>
+        </div>
+</section>
+<!-- Blog Section End -->
+<!-- Footer Section Begin -->
+
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="~/Assets/Img/gos.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="~/Assets/Img/gos2.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

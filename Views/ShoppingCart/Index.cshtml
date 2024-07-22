@@ -1,0 +1,128 @@
+﻿@using xuonggame.Models
+@{
+    ViewBag.Title = "Shopping";
+}
+
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    @{
+                        if (Session["Cart"] != null)
+                        {
+                            using (Html.BeginForm("UpdateCart", "ShoppingCart", FormMethod.Post))
+                            {
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="shoping__product">Products</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    @foreach (var cart in (List<Cart>)Session["Cart"])
+                                    {
+                                        double p = Convert.ToDouble(cart.Product.ProPrice);
+                                        int q = Convert.ToInt32(cart.Quantity);
+                                        double subtotal = p * q;
+                                        <tbody>
+                                            <tr>
+                                                <td class="shoping__cart__item">
+                                                    <img src="@cart.Product.ProImage" alt="" width="200px">
+                                                    <h5>@cart.Product.ProName</h5>
+                                                </td>
+                                                <td class="shoping__cart__price">
+                                                    @Html.FormatValue(cart.Product.ProPrice, "{0:C}")
+                                                </td>
+                                                <td class="shoping__cart__quantity">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty">
+                                                            <input type="text" name="quantity" value="@cart.Quantity">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="shoping__cart__total">
+                                                    @Html.FormatValue(subtotal, "{0:C}")
+                                                </td>
+                                                <td class="shoping__cart__item__close">
+                                                    @Html.ActionLink("X", "RemoveItem", "ShoppingCart", new { Id = cart.Product.ProId }, new { onclick = "return confirm('Bạn có chắc muốn xóa sản phẩm này ?');" })
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    }
+
+                                </table>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="shoping__cart__btns">
+                                            <a href="@Url.Action("Index", "Products")" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+
+                                            <a href="#" class="primary-btn cart-btn cart-btn-right">
+                                                <span class="icon_loading"></span>
+                                                <input type="submit" value="Update Cart" />
+                                            </a>
+
+
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="shoping__continue">
+                                            <div class="shoping__discount">
+                                                <h5>Discount Codes</h5>
+                                                <form action="#">
+                                                    <input type="text" placeholder="Enter your coupon code">
+                                                    <button type="submit" class="site-btn">APPLY COUPON</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @{
+                                        List<Cart> temp = (List<Cart>)Session["Cart"];
+                                        var total = temp.Sum(x => x.Quantity * x.Product.ProPrice);
+                                    }
+                                    <div class="col-lg-6">
+                                        <div class="shoping__checkout">
+                                            <h5>Cart Total</h5>
+                                            <ul>
+
+                                                <li>Total <span>@Html.FormatValue(total, "{0:C}")</span></li>
+                                            </ul>
+                                            
+                                            <a href="@Url.Action("CheckOut", "ShoppingCart")" class="primary-btn">PROCEED TO CHECKOUT</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                <h4>"Currently, your cart is empty.Continue to <a href="@Url.Action("Index","Product")">Shopping</a> ? " </h4>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".quantily").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                $("#errmsg").html("Enter digits only!").show().fedeOut("slow");
+                return false;
+            }
+        });
+    });
+</script>
+
+
+

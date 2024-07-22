@@ -1,0 +1,134 @@
+﻿@model xuonggame.Models.Blog
+@using xuonggame.Models
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var list1 = General.getBlog();
+}
+
+<section class="blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="blog__sidebar">
+                    <div class="blog__sidebar__search">
+                        <form action="#">
+                            <input type="text" placeholder="Search...">
+                            <button type="submit"><span class="icon_search"></span></button>
+                        </form>
+                    </div>
+                    <div class="blog__sidebar__item">
+                        <h4>Categories</h4>
+                        <ul>
+                            @foreach (var i in list1)
+                            {
+
+
+                                <li><a href="#">@i.category</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="blog__sidebar__item">
+                        <h4>Recent News</h4>
+                        <div class="blog__sidebar__recent">
+                            @foreach (var item in list1.Take(3))
+                            {
+                                <a href="@Url.Action("Detail","Blog", new { id = item.blog_id })" class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__pic">
+                                        <img src="@item.ImgBlog" alt="" width="100px">
+                                    </div>
+                                    <div class="blog__sidebar__recent__item__text">
+                                        <h6>@item.category<br /> @item.title</h6>
+                                        <span>@item.publish_date</span>
+                                    </div>
+                                </a>
+                            }
+
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-7 order-md-1 order-1">
+                <div class="blog__details__text">
+                    <img src="@Model.ImgBlog" alt="" width="100%">
+                    <p>
+                        @Model.content
+                </p>
+                <h3>
+                    @Model.title
+            </h3>
+
+        </div>
+        <div class="blog__details__content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="blog__details__author">
+                        <div class="blog__details__author__pic">
+                            <img src="~/Assets/Img/user.jpg" alt="">
+                        </div>
+                        <div class="blog__details__author__text">
+                            <h6>@Model.author</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="blog__details__widget">
+                        <ul>
+                            <li><span>Categories:</span> @Model.category</li>
+                            <li><span>Tags:</span> All, Trending, @Model.category,</li>
+                        </ul>
+                        <div class="blog__details__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-google-plus"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+<section class="related-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title related-blog-title">
+                    <h2>Post You May Like</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach(var item in list1.Take(3))
+            {
+
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <a href="@Url.Action("Detail","Blog", new { id = item.blog_id })">
+
+                        <img src="@item.ImgBlog" alt="" width="100%" height="250px">
+                        </a>
+                    </div>
+                    <div class="blog__item__text">
+                        <ul>
+                            <li><i class="fa fa-calendar-o"></i> @item.publish_date</li>
+                            <li><i class="fa fa-comment-o"></i> 5</li>
+                        </ul>
+                        <h5><a href="@Url.Action("Detail","Blog", new { id = item.blog_id })">@item.title</a></h5>
+                        <p>@item.ShortContent</p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>
+
